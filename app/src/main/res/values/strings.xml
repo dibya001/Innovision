@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Innovision</string>
+    <string name="KPetShop">Pet Shop</string>
+    <string name="KNewArrivals">New arrivals</string>
+
+    <string name="action_settings">Actions</string>
+
+</resources>
