@@ -6,10 +6,13 @@
         <item>@drawable/puppy_02</item>
         <item>@drawable/puppy_03</item>
         <item>@drawable/puppy_04</item>
-        <item>@drawable/puppy_05</item>
-        <item>@drawable/puppy_06</item>
-        <item>@drawable/puppy_07</item>
-        <item>@drawable/puppy_08</item>
     </string-array>
+
+    <integer-array name="click_id">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </integer-array>
 
 </resources>

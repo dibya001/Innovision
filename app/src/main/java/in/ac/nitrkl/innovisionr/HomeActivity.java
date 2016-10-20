@@ -1,20 +1,21 @@
 package in.ac.nitrkl.innovisionr;
 
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.IdRes;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
@@ -24,7 +25,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import in.ac.nitrkl.innovisionr.Corousel.CirclePageIndicator;
-public class MainActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity {
 
     private static ViewPager mPager;
     private static int currentPage = 0;
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -56,13 +57,43 @@ public class MainActivity extends AppCompatActivity {
         final int imageHeight= (int) (imageWidth*0.6);
         // Get the array of puppy resources
         final TypedArray puppyResourcesTypedArray = getResources().obtainTypedArray(R.array.puppies_array);
-
+       // final TypedArray imageViewId = getResources().obtainTypedArray(R.array.click_id);
         // Populate the carousel with items
         ImageView imageItem;
+
+        View.OnClickListener click_listener = new View.OnClickListener() {
+            public void onClick(View v) {
+                // do something when the button is clicked
+                int id = (int) v.getId();
+                switch (id) {
+                    case 1:
+                        Intent i=  new Intent(getApplicationContext(),GridEventActivity.class);
+                        i.putExtra("category","event");
+                        startActivity(i);
+                        break;
+                    case 2:
+                        Intent j=  new Intent(getApplicationContext(),GridEventActivity.class);
+                        j.putExtra("category","event");
+                        startActivity(j);
+                        break;
+                    case 3:
+                        Intent k=  new Intent(getApplicationContext(),GridEventActivity.class);
+                        k.putExtra("category","event");
+                        startActivity(k);
+                        break;
+                    case 4:
+                        Intent l=  new Intent(getApplicationContext(),GridEventActivity.class);
+                        l.putExtra("category","event");
+                        startActivity(l);
+                        break;
+                }
+
+            }
+        };
         for (int i = 0 ; i < puppyResourcesTypedArray.length() ; ++i) {
             // Create new ImageView
             imageItem = new ImageView(this);
-
+            imageItem.setId(i+1);
             // Set the shadow background
             imageItem.setBackgroundResource(R.drawable.shadow);
 
@@ -72,9 +103,12 @@ public class MainActivity extends AppCompatActivity {
             // Set the size of the image view to the previously computed value
             imageItem.setLayoutParams(new LinearLayout.LayoutParams(imageWidth,imageHeight));
 
+            imageItem.setOnClickListener(click_listener);
+
             /// Add image view to the carousel container
             mCarouselContainer.addView(imageItem);
         }
+
 
         /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -106,24 +140,12 @@ public class MainActivity extends AppCompatActivity {
             ImagesArray.add(IMAGES[i]);
 
         mPager = (ViewPager) findViewById(R.id.pager);
-
-
-        mPager.setAdapter(new SlidingImage_Adapter(MainActivity.this, ImagesArray));
-
-
-        CirclePageIndicator indicator = (CirclePageIndicator)
-                findViewById(R.id.indicator);
-
+        mPager.setAdapter(new SlidingImage_Adapter(HomeActivity.this, ImagesArray));
+        CirclePageIndicator indicator = (CirclePageIndicator) findViewById(R.id.indicator);
         indicator.setViewPager(mPager);
-
         final float density = getResources().getDisplayMetrics().density;
-
         indicator.setRadius(5 * density);
-
-
         NUM_PAGES = IMAGES.length;
-
-
         // Auto start of viewpager
         final Handler handler = new Handler();
         final Runnable Update = new Runnable() {
@@ -141,7 +163,6 @@ public class MainActivity extends AppCompatActivity {
                 handler.post(Update);
             }
         }, 3000, 3000);
-
         // Pager listener over indicator
         indicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
