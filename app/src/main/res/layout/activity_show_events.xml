@@ -1,21 +1,27 @@
-<RelativeLayout
-    android:layout_width="match_parent"
+<android.support.design.widget.CoordinatorLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/background"
     xmlns:android="http://schemas.android.com/apk/res/android">
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/tb"
         android:background="#45a"
         android:minHeight="?attr/actionBarSize"
-        android:title="new page"
-        />
-<android.support.v7.widget.RecyclerView android:id="@+id/recyclerView"
+        android:title="new page" />
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v7.widget.RecyclerView android:id="@+id/recyclerView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_below="@id/tb"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
     xmlns:android="http://schemas.android.com/apk/res/android" />
-<android.support.design.widget.FloatingActionButton
+    <android.support.design.widget.FloatingActionButton
     android:layout_height="wrap_content"
     android:layout_width="wrap_content"
     android:layout_gravity="bottom|end"
@@ -25,6 +31,5 @@
     android:src="@mipmap/ic_launcher"
     android:id="@+id/fab"
     android:layout_marginBottom="16dp"
-    android:layout_marginRight="16dp"
-    />
-</RelativeLayout>
+    android:layout_marginRight="16dp" />
+</android.support.design.widget.CoordinatorLayout>

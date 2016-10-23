@@ -40,7 +40,7 @@
         android:textColor="#505050"
         android:textStyle="bold"
         android:textSize="12sp"
-        android:text="@string/KNewArrivals" />
+        android:text="@string/categories" />
 
     <!-- Container view to scroll horizontally which gives the carousel effect -->
     <HorizontalScrollView
@@ -48,15 +48,13 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_below="@+id/tv1"
-        android:background="@drawable/shadow"
         android:scrollbars="none">
 
-        <!-- Carousel items container - lays out items horizontally -->
+        <!-- Horizontal Scroll View lays out items horizontally -->
         <LinearLayout android:id="@+id/carousel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:elevation="30dp"/>
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"/>
 
     </HorizontalScrollView>
 

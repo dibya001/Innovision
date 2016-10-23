@@ -8,6 +8,7 @@ import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -34,13 +35,13 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
     EditText email, password;
-    AppCompatButton login;
+    Button login;
     SharedPreferences.Editor edit;
-    TextView _signupLink;
+    TextView _signupLink,skip;
     String loggedin;
     String _email, _password;
     SharedPreferences sp;
-    String loginurl = "http://192.168.43.103/inno_final/login.php";
+    String loginurl = "http://innovision.nitrkl.ac.in/android/login.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +55,18 @@ public class LoginActivity extends AppCompatActivity {
         sp = getSharedPreferences("demo_file", MODE_PRIVATE);
         edit = sp.edit();
         email = (EditText) findViewById(R.id.email);
+        skip= (TextView) findViewById(R.id.skip);
+        skip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LoginActivity.this,HomeActivity.class));
+                finish();
+                //Toast.makeText(LoginActivity.this,"HII",Toast.LENGTH_LONG).show();
+                // finish();
+            }
+        });
         password = (EditText) findViewById(R.id.password);
-        login = (AppCompatButton) findViewById(R.id.btn_login);
+        login = (Button) findViewById(R.id.btn_login);
         _signupLink = (TextView) findViewById(R.id.link_signup);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,6 +81,7 @@ public class LoginActivity extends AppCompatActivity {
                 // Start the Signup activity
                 Intent intent = new Intent(getApplicationContext(), SignupActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
     }

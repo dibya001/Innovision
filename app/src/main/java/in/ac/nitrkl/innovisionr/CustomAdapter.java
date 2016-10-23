@@ -3,6 +3,7 @@ package in.ac.nitrkl.innovisionr;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
@@ -23,13 +25,13 @@ import java.util.ArrayList;
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder>{
     private static final String TAG = "CustomAdapter";
     String textcat[]={"im","title","date","venue","time","descrption","rules","judging_criteria","coordinator"};
-        Context ctx;
-        ArrayList<String> arrayList;
-        private int[] mDataSetTypes;
+    Context ctx;
+    ArrayList<String> arrayList;
+    private int[] mDataSetTypes;
 
-        public static final int IMAGE = 11;
-        public static final int TEXT = 15;
-        String passeddata;
+    public static final int IMAGE = 11;
+    public static final int TEXT = 15;
+    String passeddata;
 
     public CustomAdapter(ShowEventActivity ctx, ArrayList<String>arrayList, int[] dataSetTypes) {
         this.arrayList=arrayList;
@@ -57,18 +59,24 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
         if (viewHolder.getItemViewType() == IMAGE) {
             final ImageViewHolder holder = (ImageViewHolder) viewHolder;
+           // Log.i("image","http://innovision.nitrkl.ac.in/"+arrayList.get(position));
             Glide.with(ctx)
                     .load(arrayList.get(position))
+                    .dontAnimate()
+
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .listener(new RequestListener<String, GlideDrawable>() {
                         @Override
                         public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                            holder.pb.setVisibility(View.GONE);
+                            holder.pb.setVisibility(View.VISIBLE);
+                            Log.i("glideimage","exception");
                             return false;
                         }
 
                         @Override
                         public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
                             holder.pb.setVisibility(View.GONE);
+                            Log.i("glideimage","ready");
                             return false;
                         }
                     })
@@ -79,7 +87,10 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         else if (viewHolder.getItemViewType() == TEXT) {
 
             TextViewHolder holder = (TextViewHolder) viewHolder;
-            holder.score.setText(arrayList.get(position));
+            if(arrayList.get(position).length()<=2)
+                holder.score.setText("NA");
+            else
+                holder.score.setText(arrayList.get(position));
             holder.heading.setText(textcat[position]);
             holder.score.setTypeface(Typeface.createFromAsset(ctx.getAssets(),"kievit.ttf"));
         }

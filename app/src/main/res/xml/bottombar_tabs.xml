@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <tabs>
     <tab
-        id="@+id/tab_favorites"
-        icon="@mipmap/ic_launcher"
+        id="@+id/tab_home"
+        icon="@drawable/timeline"
         title="Favorites" />
     <tab
-        id="@+id/tab_nearby"
-        icon="@mipmap/ic_launcher"
+        id="@+id/tab_timeline"
+        icon="@drawable/timeline"
         title="Nearby" />
     <tab
-        id="@+id/tab_friends"
-        icon="@mipmap/ic_launcher"
+        id="@+id/tab_bookmark"
+        icon="@drawable/bookmark"
+        title="Friends" />
+    <tab
+        id="@+id/tab_team"
+        icon="@drawable/bookmark"
         title="Friends" />
 </tabs>

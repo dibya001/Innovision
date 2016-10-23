@@ -1,7 +1,11 @@
 package in.ac.nitrkl.innovisionr;
 
+import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,7 +28,7 @@ import java.util.Map;
 
 import it.gmariotti.recyclerview.adapter.SlideInBottomAnimatorAdapter;
 
-public class GridEventActivity extends AppCompatActivity {
+public class GridEventActivity extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener{
 
     GridLayoutManager lLayout;
     String code;
@@ -33,29 +37,37 @@ public class GridEventActivity extends AppCompatActivity {
     ArrayList<EventDetails> eventDetails;
     RecyclerViewAdapter rcAdapter;
     SwipeRefreshLayout sp;
-    String url = "http://192.168.43.103/inno_final/fetch_events.php";
+    String category;
+    String url = "http://innovision.nitrkl.ac.in/android/fetch_events.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gridevent);
-        tb= (Toolbar) findViewById(R.id.tb);
+        tb = (Toolbar) findViewById(R.id.tb);
         setSupportActionBar(tb);
+        showSnack(ConnectivityReceiver.isConnected());
         eventDetails = new ArrayList<>();
+        category=getIntent().getStringExtra("category");
         allEvents = (RecyclerView) findViewById(R.id.allEvents);
-        sp= (SwipeRefreshLayout) findViewById(R.id.swipe);
+        sp = (SwipeRefreshLayout) findViewById(R.id.swipe);
         lLayout = new GridLayoutManager(GridEventActivity.this, 2);
-        rcAdapter = new RecyclerViewAdapter(GridEventActivity.this, eventDetails);
-        sp.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                eventDetails.clear();
-                rcAdapter.notifyDataSetChanged();
-                fetch();
-                makegrid();
-                sp.setRefreshing(false);
-            }
-        });
+        rcAdapter = new RecyclerViewAdapter(GridEventActivity.this, eventDetails,category);
+        if(!sp.isRefreshing()) {
+            sp.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+
+                    fetch();
+                    makegrid();
+                    sp.setRefreshing(true);
+
+                }
+            });
+        }
+
+
+
         makegrid();
 
         fetch();
@@ -65,10 +77,58 @@ public class GridEventActivity extends AppCompatActivity {
 
 
     }
+    private void showSnack(boolean isConnected) {
+        String message;
+        int color;
+        if (isConnected) {
+            message = "Good! Connected to Internet";
+            color = Color.WHITE;
+            //Toast.makeText(HomeActivity.this, message, Toast.LENGTH_SHORT).show();
+        } else {
+            message = "Sorry! Not connected to internet";
+            color = Color.RED;
+            // Toast.makeText(HomeActivity.this, message, Toast.LENGTH_SHORT).show();
+            AlertDialog.Builder ab=new AlertDialog.Builder(GridEventActivity.this);
+            ab.setTitle("No Internet");
+            ab.setMessage(message);
+            ab.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
 
+                }
+            });
+            AlertDialog ad = ab.create();
+            ad.show();
+        }
+
+       /* Snackbar snackbar = Snackbar
+                .make(findViewById(R.id.fab), message, Snackbar.LENGTH_LONG);
+
+        View sbView = snackbar.getView();
+        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(color);
+        snackbar.show();*/
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // register connection status listener
+        MyApplication.getInstance().setConnectivityListener(this);
+    }
+
+    /**
+     * Callback will be triggered when there is change in
+     * network connection
+     */
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+        showSnack(isConnected);
+    }
     private void makegrid() {
         lLayout = new GridLayoutManager(GridEventActivity.this, 2);
-        allEvents.setHasFixedSize(true);
+       // allEvents.setHasFixedSize(true);
 
         allEvents.setLayoutManager(lLayout);
 
@@ -80,51 +140,55 @@ public class GridEventActivity extends AppCompatActivity {
     }
 
     public void fetch(){
-    StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-            new Response.Listener<String>() {
+        eventDetails.clear();
+        rcAdapter.notifyDataSetChanged();
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
 
-                @Override
+                    @Override
 
-                public void onResponse(String response) {
-                    try {
+                    public void onResponse(String response) {
+                        try {
 
-                        JSONArray jsonArray = new JSONArray(response);
-                        for(int i=0;i<jsonArray.length();i++)
-                        {
-                            JSONObject obj=jsonArray.getJSONObject(i);
-                            EventDetails a=new EventDetails();
-                            a.setId(Integer.parseInt(obj.getString("eid")));
-                            a.setImage_path("http://innovision.nitrkl.ac.in/"+obj.getString("image_path"));
-                            a.setName(obj.getString("title"));
-                            eventDetails.add(a);
-                            rcAdapter.notifyDataSetChanged();
+                            JSONArray jsonArray = new JSONArray(response);
+                            for(int i=0;i<jsonArray.length();i++)
+                            {
+                                JSONObject obj=jsonArray.getJSONObject(i);
+                                EventDetails a=new EventDetails();
+                                a.setId(Integer.parseInt(obj.getString("eid")));
+                                a.setImage_path(obj.getString("image_path"));
+                                a.setName(obj.getString("title"));
+                                eventDetails.add(a);
+                                rcAdapter.notifyDataSetChanged();
 
+                            }
+                            Log.i("eee",response);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                        Log.i("eee",response);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                        sp.setRefreshing(false);
+
                     }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(final VolleyError error) {
 
 
-                }
-            }, new Response.ErrorListener() {
-        @Override
-        public void onErrorResponse(final VolleyError error) {
+                Log.i("eeee", error.toString());
+                sp.setRefreshing(false);
 
+            }
 
-            Log.i("eeee", error.toString());
-        }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("cat", category);
+                Log.i("eeee",category);
+                return params;
+            }
+        };
 
-    }) {
-        @Override
-        protected Map<String, String> getParams() throws AuthFailureError {
-            Map<String, String> params = new HashMap<String, String>();
-            params.put("cat", "event");
-
-            return params;
-        }
-    };
-
-    MySingleTon.getInstance(GridEventActivity.this).addtoRequestQueue(stringRequest);
-}
+        MySingleTon.getInstance(GridEventActivity.this).addtoRequestQueue(stringRequest);
+    }
 }

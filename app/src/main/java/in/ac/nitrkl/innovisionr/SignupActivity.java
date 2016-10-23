@@ -10,6 +10,7 @@ import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -40,11 +41,11 @@ public class SignupActivity extends AppCompatActivity {
     String code,userid;
     String name1,email1,password1,contact1,univ1,gender;
     RadioGroup rg;
-    AppCompatButton register;
+    Button register;
     SharedPreferences sp;
     SharedPreferences.Editor edit;
     TextView login;
-    String regsiterurl="http://192.168.43.103/inno_final/registration.php";
+    String regsiterurl="http://innovision.nitrkl.ac.in/android/registration.php";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,10 +68,11 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(SignupActivity.this,LoginActivity.class));
+                finish();
 
             }
         });
-        register=(AppCompatButton)findViewById(R.id.btn_signup);
+        register=(Button)findViewById(R.id.btn_signup);
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

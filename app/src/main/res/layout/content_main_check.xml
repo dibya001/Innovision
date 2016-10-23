@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_main"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="false"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="in.ac.nitrkl.innovisionr.HomeActivity"
+    tools:showIn="@layout/activity_home">
+
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_weight="5"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_alignParentTop="true" />
+
+    <in.ac.nitrkl.innovisionr.Corousel.CirclePageIndicator
+        android:id="@+id/indicator"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/pager"
+        android:layout_centerHorizontal="true"
+        android:gravity="bottom"
+        android:padding="10dip"
+        app:centered="true"
+        app:fillColor="@color/colorAccent"
+        app:pageColor="@color/colorPrimary"
+        app:snap="false" />
+
+    <!-- Container view to scroll horizontally which gives the carousel effect -->
+    <HorizontalScrollView
+        android:layout_weight="3"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        android:background="@color/colorPrimary"
+        android:layout_below="@+id/tv1"
+        android:scrollbars="none">
+
+        <!-- Horizontal Scroll View lays out items horizontally -->
+        <LinearLayout android:id="@+id/carousel"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iv1"
+                    android:padding="9dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="3"
+                    android:src="@drawable/event"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"
+                    android:text="LALALALAL"/>
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/iv2"
+                android:padding="9dp"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/exhibition" />
+
+            <ImageView
+                android:id="@+id/iv3"
+                android:padding="9dp"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/flagship" />
+
+            <ImageView
+                android:id="@+id/iv4"
+                android:padding="9dp"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/workshop"/>
+            <ImageView
+                android:id="@+id/iv5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/guest" />
+
+            <ImageView
+                android:id="@+id/iv6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/proshow" />
+
+         </LinearLayout>
+
+    </HorizontalScrollView>
+
+
+
+    <!-- <android.support.design.widget.FloatingActionButton
+         android:id="@+id/fab"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_gravity="bottom|end"
+         android:layout_margin="@dimen/fab_margin"
+         android:layout_alignParentRight="true"
+         android:layout_above="@+id/bottomBar"
+         app:srcCompat="@android:drawable/ic_dialog_email" />-->
+
+    <!--<com.roughike.bottombar.BottomBar
+        android:id="@+id/bottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        app:bb_tabXmlResource="@xml/bottombar_tabs"/>-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#FFF"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        >
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/bookmark"
+            android:id="@+id/bookmark"
+            />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/bookmark"
+            android:id="@+id/timeline"
+            />
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/bookmark"
+            android:id="@+id/team"
+            />
+    </LinearLayout>
+</LinearLayout>

@@ -32,11 +32,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     ArrayList<EventDetails> eventDetails;
     Context context;
+    String category;
     int lastPosition=-1;
 
-    public RecyclerViewAdapter(Context mainActivity, ArrayList<EventDetails> eventDetails) {
+    public RecyclerViewAdapter(Context mainActivity, ArrayList<EventDetails> eventDetails,String category) {
         this.eventDetails = eventDetails;
         this.context = mainActivity;
+        this.category=category;
     }
 
     @Override
@@ -58,25 +60,26 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 .error(R.mipmap.ic_launcher)
                 .into(holder.countryPhoto);
 
-*/            Glide.with(context).load(eventDetails.get(position).getImage_path())
-                .thumbnail(0.5f)
-                .crossFade()
+*/            Glide.with(context).load("http://innovision.nitrkl.ac.in/"+eventDetails.get(position).getImage_path())
+                .dontAnimate()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .listener(new RequestListener<String, GlideDrawable>() {
                     @Override
                     public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                        holder.pb.setVisibility(View.GONE);
+                        holder.pb.setVisibility(View.VISIBLE);
+                        Log.i("glideimage","exception");
                         return false;
                     }
 
                     @Override
                     public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
                         holder.pb.setVisibility(View.GONE);
+                        Log.i("glideimage","ready");
                         return false;
                     }
                 })
                 .into(holder.countryPhoto);
-      setAnimation(holder.card, position);
+        setAnimation(holder.card, position);
 
     }
 
@@ -103,6 +106,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 Intent i = new Intent(context, ShowEventActivity.class);
 
                 i.putExtra("id", eventDetails.get(pos).getId() + "");
+                i.putExtra("category",category);
                 //Toast.makeText(context,eventDetails.get(holder.getAdapterPosition()).getId(),Toast.LENGTH_LONG).show();
                 //Toast.makeText(context,allEvents.get(holder.getAdapterPosition()).getId(),Toast.LENGTH_LONG).show();
                 Log.i("eee", eventDetails.get(pos).getId() + "");

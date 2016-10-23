@@ -7,6 +7,7 @@ package in.ac.nitrkl.innovisionr;
 import android.content.Context;
 import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,15 +24,13 @@ public class SlidingImage_Adapter extends PagerAdapter {
     private ArrayList<Integer> IMAGES;
     private LayoutInflater inflater;
     private Context context;
+    private int index[]={5,6,7,8};
 
 
     public SlidingImage_Adapter(Context context,ArrayList<Integer> IMAGES) {
         this.context = context;
         this.IMAGES=IMAGES;
         inflater = LayoutInflater.from(context);
-
-
-
     }
 
     @Override
@@ -50,6 +49,8 @@ public class SlidingImage_Adapter extends PagerAdapter {
 
         assert imageLayout != null;
         final ImageView imageView = (ImageView) imageLayout.findViewById(R.id.image);
+        Log.d("position",""+position);
+        imageView.setId(position+5);
         imageView.setImageResource(IMAGES.get(position));
         view.addView(imageLayout, 0);
 

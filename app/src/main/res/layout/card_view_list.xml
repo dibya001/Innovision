@@ -11,8 +11,7 @@
     card_view:cardUseCompatPadding="true"
     card_view:cardCornerRadius="8dp"
     android:clickable="true"
-    android:foreground="?android:attr/selectableItemBackground"
-  >
+    android:foreground="?android:attr/selectableItemBackground">
 
 
 
@@ -25,25 +24,21 @@
         style="@style/Base.Widget.AppCompat.ProgressBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-        <ImageView
+
+    <ImageView
             android:id="@+id/country_photo"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:scaleType="fitXY"
-            android:contentDescription="cd"
+            android:contentDescription="cd" />
 
-             />
-
-        <TextView
+    <TextView
             android:id="@+id/country_name"
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
-            android:textSize="20sp"
             android:text="kos"
-
             android:gravity="center"
+            android:maxEms="3"
             android:layout_below="@+id/country_photo"
             android:paddingBottom="4dp"
             android:paddingTop="4dp"

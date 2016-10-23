@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Array of puppy resource IDs -->
-    <string-array name="puppies_array">
-        <item>@drawable/puppy_01</item>
-        <item>@drawable/puppy_02</item>
-        <item>@drawable/puppy_03</item>
-        <item>@drawable/puppy_04</item>
+    <string-array name="p_holder">
+        <item>@drawable/a</item>
+        <item>@drawable/b</item>
+        <item>@drawable/c</item>
+        <item>@drawable/d</item>
     </string-array>
 
     <integer-array name="click_id">
