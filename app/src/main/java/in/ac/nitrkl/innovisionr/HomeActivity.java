@@ -26,9 +26,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.roughike.bottombar.BottomBar;
-import com.roughike.bottombar.OnTabSelectListener;
-
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -42,7 +39,7 @@ public class HomeActivity extends AppCompatActivity  implements ConnectivityRece
     private static ViewPager mPager;
     private static int currentPage = 0;
     private static int NUM_PAGES = 0;
-    private static final Integer[] IMAGES= {R.drawable.a,R.drawable.a,R.drawable.a,R.drawable.a};
+    private static final Integer[] IMAGES= {R.drawable.a,R.drawable.b,R.drawable.c,R.drawable.d,R.drawable.e,R.drawable.f,R.drawable.g,R.drawable.h};
     private ArrayList<Integer> ImagesArray = new ArrayList<Integer>();
 
     ImageView bm,tl,team;
@@ -63,6 +60,10 @@ public class HomeActivity extends AppCompatActivity  implements ConnectivityRece
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setTitleTextColor(Color.WHITE);
+
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(R.mipmap.ic_icon);
 
         sp = getSharedPreferences("demo_file", MODE_PRIVATE);
         edit = sp.edit();
@@ -280,6 +281,10 @@ public class HomeActivity extends AppCompatActivity  implements ConnectivityRece
                 Toast.makeText(this,"You are already registered",Toast.LENGTH_LONG).show();
             }
             return true;
+        }
+        else if(id==R.id.map)
+        {
+            startActivity(new Intent(this,MapActivity.class));
         }
 
         return super.onOptionsItemSelected(item);

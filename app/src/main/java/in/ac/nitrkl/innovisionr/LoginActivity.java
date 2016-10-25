@@ -25,6 +25,9 @@ import com.android.volley.toolbox.StringRequest;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by surya on 19/10/16.
@@ -47,11 +50,11 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        Toolbar tb = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(tb);
-        ImageView iv= (ImageView) findViewById(R.id.img);
-        iv.setTranslationY(-2000f);
-        iv.animate().translationYBy(2000f).setDuration(1000);
+        //Toolbar tb = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(tb);
+        //getSupportActionBar().setDisplayShowHomeEnabled(true);
+        //getSupportActionBar().setIcon(R.mipmap.ic_icon);
+
         sp = getSharedPreferences("demo_file", MODE_PRIVATE);
         edit = sp.edit();
         email = (EditText) findViewById(R.id.email);
@@ -92,20 +95,19 @@ public class LoginActivity extends AppCompatActivity {
         _email = email.getText().toString();
         _password = password.getText().toString();
         //   Toast.makeText(LoginActivity.this,_email+_password,Toast.LENGTH_LONG).show();
-        if (_email.isEmpty()) {
-            email.setError("enter a valid email address");
+        Pattern pattern = Pattern.compile("[|#|%|&|*|(|)|'|\"|{|}|[|]|?]");
+        Matcher matcher = pattern.matcher(_email);
+        Matcher matcherp = pattern.matcher(_password);
+        boolean bemail = matcher.find();
+        boolean bpassword=matcherp.find();
+
+
+        if (_email.isEmpty() || bemail==true || _password.isEmpty() ) {
+            Toast.makeText(this, "Enter valid credentials", Toast.LENGTH_SHORT).show();
             valid = false;
         } else {
             email.setError(null);
         }
-
-        if (_password.isEmpty()) {
-            password.setError("cant be empty");
-            valid = false;
-        } else {
-            password.setError(null);
-        }
-
         return valid;
     }
 
@@ -166,10 +168,6 @@ public class LoginActivity extends AppCompatActivity {
             };
 
             MySingleTon.getInstance(LoginActivity.this).addtoRequestQueue(stringRequest);
-        }
-        else
-        {
-            Toast.makeText(LoginActivity.this,"fill",Toast.LENGTH_LONG).show();
         }
     }
 }

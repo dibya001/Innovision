@@ -11,6 +11,8 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -37,6 +39,7 @@ public class GridEventActivity extends AppCompatActivity implements Connectivity
     ArrayList<EventDetails> eventDetails;
     RecyclerViewAdapter rcAdapter;
     SwipeRefreshLayout sp;
+    ProgressBar pb;
     String category;
     String url = "http://innovision.nitrkl.ac.in/android/fetch_events.php";
 
@@ -44,15 +47,24 @@ public class GridEventActivity extends AppCompatActivity implements Connectivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gridevent);
+
         tb = (Toolbar) findViewById(R.id.tb);
         setSupportActionBar(tb);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(R.mipmap.ic_icon);
+
+        tb.setTitleTextColor(Color.WHITE);
         showSnack(ConnectivityReceiver.isConnected());
+        pb= (ProgressBar) findViewById(R.id.gridprogress);
         eventDetails = new ArrayList<>();
         category=getIntent().getStringExtra("category");
         allEvents = (RecyclerView) findViewById(R.id.allEvents);
         sp = (SwipeRefreshLayout) findViewById(R.id.swipe);
         lLayout = new GridLayoutManager(GridEventActivity.this, 2);
         rcAdapter = new RecyclerViewAdapter(GridEventActivity.this, eventDetails,category);
+        makegrid();
+        fetch();
+
         if(!sp.isRefreshing()) {
             sp.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
@@ -66,11 +78,6 @@ public class GridEventActivity extends AppCompatActivity implements Connectivity
             });
         }
 
-
-
-        makegrid();
-
-        fetch();
 
 
 
@@ -126,6 +133,9 @@ public class GridEventActivity extends AppCompatActivity implements Connectivity
     public void onNetworkConnectionChanged(boolean isConnected) {
         showSnack(isConnected);
     }
+
+
+
     private void makegrid() {
         lLayout = new GridLayoutManager(GridEventActivity.this, 2);
        // allEvents.setHasFixedSize(true);
@@ -142,6 +152,7 @@ public class GridEventActivity extends AppCompatActivity implements Connectivity
     public void fetch(){
         eventDetails.clear();
         rcAdapter.notifyDataSetChanged();
+
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
 
@@ -149,14 +160,18 @@ public class GridEventActivity extends AppCompatActivity implements Connectivity
 
                     public void onResponse(String response) {
                         try {
-
+                            pb.setVisibility(View.GONE);
                             JSONArray jsonArray = new JSONArray(response);
                             for(int i=0;i<jsonArray.length();i++)
                             {
                                 JSONObject obj=jsonArray.getJSONObject(i);
                                 EventDetails a=new EventDetails();
                                 a.setId(Integer.parseInt(obj.getString("eid")));
-                                a.setImage_path(obj.getString("image_path"));
+                                String path=obj.getString("image_path");
+                                path=path.substring(14);
+                                Log.i("path",path);
+                                path="http://innovision.nitrkl.ac.in/android/images/"+path ;
+                                a.setImage_path(path);
                                 a.setName(obj.getString("title"));
                                 eventDetails.add(a);
                                 rcAdapter.notifyDataSetChanged();

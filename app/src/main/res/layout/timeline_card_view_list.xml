@@ -6,8 +6,8 @@
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="#000"
     card_view:cardUseCompatPadding="true"
-
     android:padding="10dp"
   >
 
@@ -16,6 +16,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#000"
+        android:padding="10dp"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -27,11 +29,11 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="5"
+                android:layout_weight="7"
                 android:text="Title"
                 android:id="@+id/eventName"
                 android:textSize="24sp"
-                android:textColor="#AAF"
+                android:textColor="#FFFFFF"
                 android:textStyle="bold"
 
                 />
@@ -42,6 +44,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="3"
                 android:text="Title"
+                android:textColor="#FFFFFF"
                 android:id="@+id/eventType"
 
                 />
@@ -55,6 +58,7 @@
             android:layout_weight="3"
             android:text="Title"
 
+            android:textColor="#FFFFFF"
             android:gravity="center"
             android:id="@+id/time"
 

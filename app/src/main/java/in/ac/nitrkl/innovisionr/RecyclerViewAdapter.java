@@ -52,7 +52,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     @Override
-    public void onBindViewHolder(final RecyclerViewHolders holder, int position) {
+    public void onBindViewHolder(final RecyclerViewHolders holder, final int position) {
         holder.countryName.setText(eventDetails.get(position).getName());
      /*   Picasso.with(context)
                 .load(eventDetails.get(position).getImage_path())
@@ -60,21 +60,20 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 .error(R.mipmap.ic_launcher)
                 .into(holder.countryPhoto);
 
-*/            Glide.with(context).load("http://innovision.nitrkl.ac.in/"+eventDetails.get(position).getImage_path())
+*/            Glide.with(context).load(eventDetails.get(position).getImage_path())
                 .dontAnimate()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .listener(new RequestListener<String, GlideDrawable>() {
                     @Override
                     public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                        holder.pb.setVisibility(View.VISIBLE);
-                        Log.i("glideimage","exception");
+                        holder.pb.setVisibility(View.GONE);
+                        holder.countryPhoto.setImageResource(R.drawable.logo);
                         return false;
                     }
 
                     @Override
                     public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
                         holder.pb.setVisibility(View.GONE);
-                        Log.i("glideimage","ready");
                         return false;
                     }
                 })

@@ -31,7 +31,7 @@
     android:layout_height="wrap_content"
     android:id="@+id/textcard"
     android:textSize="20sp"
-
+        android:textColor="#000000"
     android:lineSpacingExtra="4dp"
 
     />

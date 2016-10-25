@@ -13,6 +13,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,6 +23,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,6 +51,7 @@ public class ShowEventActivity extends AppCompatActivity implements Connectivity
     TextView id;
     String uid,result;
     private RecyclerView mRecyclerView;
+    ProgressBar pb;
     private Context context;
     private PendingIntent mAlarmSender;
     private CustomAdapter mAdapter;
@@ -60,6 +63,7 @@ public class ShowEventActivity extends AppCompatActivity implements Connectivity
 
     ImageView image;
     Boolean dload;
+    FloatingActionButton fab;
     TextView tvtitle;
     ArrayList<String>eventdetails;
     String passedtitle;
@@ -69,15 +73,19 @@ public class ShowEventActivity extends AppCompatActivity implements Connectivity
     String eventtime;
     String eid,title,description,rules,date,venue,time,imagepath,coordinators,judging;
     SQLiteDatabase db;
+    SwipeRefreshLayout swipe;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_events);
         Toolbar tb= (Toolbar) findViewById(R.id.tb);
         setSupportActionBar(tb);
-
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(R.mipmap.ic_icon);
+        tb.setTitleTextColor(Color.WHITE);
 
         sp=getSharedPreferences("demo_file",MODE_PRIVATE);
+        pb= (ProgressBar) findViewById(R.id.showeventprogress);
         eventdetails=new ArrayList<>();
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mLayoutManager = new LinearLayoutManager(ShowEventActivity.this);
@@ -85,7 +93,20 @@ public class ShowEventActivity extends AppCompatActivity implements Connectivity
         db=openOrCreateDatabase("bookmark",MODE_APPEND,null);
         mAdapter = new CustomAdapter(this,eventdetails, mDatasetTypes);
         mRecyclerView.setAdapter(mAdapter);
+        swipe = (SwipeRefreshLayout) findViewById(R.id.swipe);
+        fetchdata();
+        if(!swipe.isRefreshing()) {
+            swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
 
+                    fetchdata();
+
+                    swipe.setRefreshing(true);
+
+                }
+            });
+        }
 
         dload=false;
         AlphaAnimatorAdapter animatorAdapter = new
@@ -93,16 +114,15 @@ public class ShowEventActivity extends AppCompatActivity implements Connectivity
         mRecyclerView.setAdapter(animatorAdapter);
 
         Intent intent=getIntent();
-        Toast.makeText(this,intent.getStringExtra("id"), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this,intent.getStringExtra("id"), Toast.LENGTH_SHORT).show();
         //id.setText(intent.getStringExtra("id"));
 
         uid=intent.getStringExtra("id");
         category=intent.getStringExtra("category");
-        fetchdata();
-        Toast.makeText(ShowEventActivity.this, time, Toast.LENGTH_SHORT).show();
-        FloatingActionButton fab= (FloatingActionButton) findViewById(R.id.fab);
-        if(!category.equals("event"))
-            fab.setVisibility(View.GONE);
+
+        //Toast.makeText(ShowEventActivity.this, time, Toast.LENGTH_SHORT).show();
+      fab= (FloatingActionButton) findViewById(R.id.fab);
+
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,7 +134,7 @@ public class ShowEventActivity extends AppCompatActivity implements Connectivity
                 }
                 else {
 
-                    eventreg();
+                     eventreg();
                     setRemainder();
 
                 }
@@ -166,7 +186,7 @@ public class ShowEventActivity extends AppCompatActivity implements Connectivity
 
     private void setRemainder() {
 
-        Toast.makeText(ShowEventActivity.this, time, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(ShowEventActivity.this, time, Toast.LENGTH_SHORT).show();
         String hour = "";
         String min="";
 
@@ -199,36 +219,27 @@ public class ShowEventActivity extends AppCompatActivity implements Connectivity
         calendar.set(2016,10, Integer.parseInt(String.valueOf(date.charAt(0))),hr, Integer.parseInt(min));
         long startTime = calendar.getTimeInMillis();
         startTime-=30*60*1000;
-        scheduleNotification(getNotification(title,"Starts In 30 mins",time), startTime);
 
+        setAlarm(Integer.parseInt(eid),title,"starts in 30 mins ",startTime);
+        //setAlarm(4545,title,"starts in 30 mins ",System.currentTimeMillis()+3000);
 
     }
 
-    private void scheduleNotification(Notification notification, long delay) {
+    public void setAlarm(int id,String title,String Text,long time){
+        Intent intent = new Intent(this, NotificationPublisher.class);
 
-        notification.flags |= Notification.DEFAULT_SOUND;
-        notification.flags |= Notification.DEFAULT_LIGHTS;
-        notification.flags |= Notification.DEFAULT_VIBRATE;
+       intent.putExtra("title",title);
+        intent.putExtra("text",Text);
+        intent.putExtra("id",String.valueOf(id));
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                this.getApplicationContext(), id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        Intent notificationIntent = new Intent(this, NotificationPublisher.class);
-        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, 1);
-        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION, notification);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        long futureInMillis =  delay;
-        AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, futureInMillis, pendingIntent);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
+       // Toast.makeText(this, "Alarm set in " + (time - System.currentTimeMillis()) + " seconds",
+         //       Toast.LENGTH_LONG).show();
     }
 
-    private Notification getNotification(String eventName, String date, String content) {
-        Notification.Builder builder = new Notification.Builder(this);
-        builder.setContentTitle(eventName);
-        builder.setContentText(date+"\n"+content);
-        builder.setSmallIcon(R.drawable.logo);
-
-
-
-           return builder.build();
-    }
 
     private void showSnack(boolean isConnected) {
         String message;
@@ -271,12 +282,7 @@ public class ShowEventActivity extends AppCompatActivity implements Connectivity
 
     private void eventreg() {
 
-
-
-
-
-
-        String eventregurl="http://192.168.43.103/android/eventreg.php";
+        String eventregurl="http://innovision.nitrkl.ac.in/android/eventreg.php";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, eventregurl,
                 new Response.Listener<String>() {
 
@@ -285,7 +291,7 @@ public class ShowEventActivity extends AppCompatActivity implements Connectivity
                     public void onResponse(String response) {
 
                         dload=true;
-                            Log.i("titns", response);
+                        Log.i("titns", response);
                         try {
                             JSONArray ob=new JSONArray(response);
                             JSONObject obj=ob.getJSONObject(0);
@@ -303,13 +309,13 @@ public class ShowEventActivity extends AppCompatActivity implements Connectivity
                                 {
 
                                 }*/
-                            //
+                                //
                                 Toast.makeText(ShowEventActivity.this, "Successfully Registered", Toast.LENGTH_LONG).show();
 
 
                                 //finish();
                             } else {
-                                Toast.makeText(ShowEventActivity.this, "already registered for this event", Toast.LENGTH_LONG).show();
+                                Toast.makeText(ShowEventActivity.this, "Already registered", Toast.LENGTH_LONG).show();
 
                             }
                             //Toast.makeText(ddctivity.this,code,Toast.LENGTH_LONG).show();
@@ -341,7 +347,7 @@ public class ShowEventActivity extends AppCompatActivity implements Connectivity
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("userid",sp.getString("userid","-1")) ;
                 params.put("eventid", uid);
-               // Log.i("code",params.get("email"));
+                // Log.i("code",params.get("email"));
                 return params;
             }
         };
@@ -354,6 +360,11 @@ public class ShowEventActivity extends AppCompatActivity implements Connectivity
 
 
     private void fetchdata() {
+        if(eventdetails.size()>0)
+        {
+            eventdetails.clear();
+            mAdapter.notifyDataSetChanged();
+        }
 
         String url = "http://innovision.nitrkl.ac.in/android/fetchevent.php";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
@@ -364,16 +375,20 @@ public class ShowEventActivity extends AppCompatActivity implements Connectivity
                     public void onResponse(String response) {
                         //Toast.makeText(ShowEvents.this, response, Toast.LENGTH_SHORT).show();
                         try {
-
+                            pb.setVisibility(View.GONE);
                             Log.i("res",response);
 
 
                             JSONArray jsonArray = new JSONArray(response);
                             JSONObject obj=jsonArray.getJSONObject(0);
 
+                            String path=obj.getString("image_path");
+                            path=path.substring(14);
 
 
-                            eventdetails.add("http://innovision.nitrkl.ac.in/"+obj.getString("image_path"));
+                            eventdetails.add(path);
+
+
                             eventdetails.add(obj.getString("title"));
 
                             //Log.i("passeddata",passedtitle);
@@ -391,32 +406,32 @@ public class ShowEventActivity extends AppCompatActivity implements Connectivity
 
                             mAdapter.notifyDataSetChanged();
 
-
+                            if(category.equals("event"))
+                                fab.setVisibility(View.VISIBLE);
                             eid=obj.getString("eid");
-                           title=obj.getString("title");
-                           description=obj.getString("description");
-                           rules=obj.getString("rules");
-                           judging=obj.getString("judging_criteria");
-                           date=obj.getString("date");
-                           venue=obj.getString("venue");
+                            title=obj.getString("title");
+                            description=obj.getString("description");
+                            rules=obj.getString("rules");
+                            judging=obj.getString("judging_criteria");
+                            date=obj.getString("date");
+                            venue=obj.getString("venue");
                             time=obj.getString("time");
                             imagepath=obj.getString("image_path");
-
-
-
                             Log.i("eee",time);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
 
-
+                        swipe.setRefreshing(false);
                     }
+
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(final VolleyError error) {
 
 
                 Log.i("eeee", error.toString());
+                swipe.setRefreshing(false);
             }
 
         }) {

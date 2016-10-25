@@ -1,7 +1,12 @@
+<android.support.v4.widget.SwipeRefreshLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/swipe"
+
+    xmlns:android="http://schemas.android.com/apk/res/android">
 <android.support.design.widget.CoordinatorLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/background"
+    android:background="@drawable/backg"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -10,26 +15,37 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/tb"
-        android:background="#45a"
+        android:background="@color/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:title="new page" />
     </android.support.design.widget.AppBarLayout>
 
+    <ProgressBar
+        android:id="@+id/showeventprogress"
+        android:visibility="visible"
+        style="@style/Base.Widget.AppCompat.ProgressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
     <android.support.v7.widget.RecyclerView android:id="@+id/recyclerView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_below="@id/tb"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
     xmlns:android="http://schemas.android.com/apk/res/android" />
+
     <android.support.design.widget.FloatingActionButton
     android:layout_height="wrap_content"
     android:layout_width="wrap_content"
     android:layout_gravity="bottom|end"
     android:padding="16dp"
+        android:background="#0b1246"
     android:layout_alignParentBottom="true"
     android:layout_alignParentRight="true"
-    android:src="@mipmap/ic_launcher"
+    android:src="@drawable/fab"
     android:id="@+id/fab"
+        android:visibility="visible"
     android:layout_marginBottom="16dp"
     android:layout_marginRight="16dp" />
+
 </android.support.design.widget.CoordinatorLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>

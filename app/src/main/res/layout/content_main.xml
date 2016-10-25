@@ -70,10 +70,10 @@
         android:layout_above="@+id/bottomBar"
         app:srcCompat="@android:drawable/ic_dialog_email" />-->
 
-    <com.roughike.bottombar.BottomBar
+    <!--<com.roughike.bottombar.BottomBar
         android:id="@+id/bottomBar"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
-        app:bb_tabXmlResource="@xml/bottombar_tabs" />
+        app:bb_tabXmlResource="@xml/bottombar_tabs" />-->
 </LinearLayout>

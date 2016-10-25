@@ -15,9 +15,15 @@ import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 import android.support.v7.widget.Toolbar;
 
@@ -26,8 +32,6 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.roughike.bottombar.BottomBar;
-import com.roughike.bottombar.OnTabSelectListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,19 +41,22 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
+import in.ac.nitrkl.innovisionr.Timeline.Timeline;
 import in.ac.nitrkl.innovisionr.Timeline.TimelineActivity;
+import in.ac.nitrkl.innovisionr.Timeline.TimelineRecyclerViewAdapter;
 
 
 
 public class BookmarkActivity  extends AppCompatActivity  implements ConnectivityReceiver.ConnectivityReceiverListener {
     SQLiteDatabase db;
     SharedPreferences sp;
-    ArrayList<String> arrayList;
-    private BottomBar bottomBar;
-    ListView l;
-    String edate,etime,title;
-    ArrayAdapter arrayAdapter;
+    ArrayList<Timeline> arrayList;
+    RecyclerView l;
+    ProgressBar pb;
+    String edate,etime,title,eid;
+    TimelineRecyclerViewAdapter arrayAdapter;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,13 +66,18 @@ public class BookmarkActivity  extends AppCompatActivity  implements Connectivit
         showSnack(ConnectivityReceiver.isConnected());
 
 
+
+
+
         if(sp.getString("userid","-1").equals("-1"))
         {
             setContentView(R.layout.emptylayout);
             Toolbar tb= (Toolbar) findViewById(R.id.emptytoolbar);
             setSupportActionBar(tb);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setIcon(R.mipmap.ic_icon);
             getSupportActionBar().setTitle("Bookmarks");
-
+            tb.setTitleTextColor(Color.WHITE);
 
             Toast.makeText(BookmarkActivity.this,"You are not logged in",Toast.LENGTH_LONG).show();
         }
@@ -74,12 +86,19 @@ public class BookmarkActivity  extends AppCompatActivity  implements Connectivit
             setContentView(R.layout.activity_bookmark);
             Toolbar tb= (Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(tb);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setIcon(R.mipmap.ic_icon);
+            pb= (ProgressBar) findViewById(R.id.bookmarkprogress);
             getSupportActionBar().setTitle("Bookmarks");
-            l= (ListView) findViewById(R.id.listView);
+            tb.setTitleTextColor(Color.WHITE);
+            l= (RecyclerView) findViewById(R.id.listView);
+
+            LinearLayoutManager lm=new LinearLayoutManager(this);
+            l.setLayoutManager(lm);
             arrayList=new ArrayList<>();
 
+            arrayAdapter = new TimelineRecyclerViewAdapter(BookmarkActivity.this, arrayList);
 
-            arrayAdapter=new ArrayAdapter(BookmarkActivity.this,android.R.layout.simple_list_item_1,arrayList);
             fetchdata();
             l.setAdapter(arrayAdapter);
 
@@ -92,7 +111,9 @@ public class BookmarkActivity  extends AppCompatActivity  implements Connectivit
     }
 
     private void fetchdata() {
-        String bookmarkurl="http://192.168.43.103/android/bookmark.php";
+
+        final String q="select E.eid,E.title,E.date,E.time,E.category  from cms_events E ,userreg R where R.userid='"+sp.getString("userid","-1") +"' and R.eid=E.eid ";
+        String bookmarkurl="http://innovision.nitrkl.ac.in/android/common.php";
         StringRequest stringRequest=new StringRequest(Request.Method.POST,bookmarkurl,
                 new Response.Listener<String>() {
 
@@ -101,32 +122,29 @@ public class BookmarkActivity  extends AppCompatActivity  implements Connectivit
                     public void onResponse(String response) {
                         try {
 
-                                JSONArray arr=new JSONArray(response);
-                                for(int i=0;i<arr.length();i++)
-                                {
-                                    JSONObject obj=arr.getJSONObject(i);
-                                    Log.i("eeee",obj.getString("title"));
-                                    arrayList.add(obj.getString("title")+"\n"+obj.getString("date")+"\n"+obj.getString("time"));
+                            pb.setVisibility(View.GONE);
 
-                                    edate=obj.getString("date");
-                                    title=obj.getString("title");
-                                    etime=obj.getString("time");
+                            Log.i("res",response);
+                            JSONArray arr=new JSONArray(response);
+                            for(int i=0;i<arr.length();i++)
+                            {
+                                JSONObject obj=arr.getJSONObject(i);
+                                Log.i("eeee",obj.getString("title"));
 
-                                    runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
+                                Timeline a=new Timeline();
+                                a.setEid(obj.getString("eid"));
+                                a.setEventName(obj.getString("title"));
+                                a.setEventType(obj.getString("category"));
+                                a.setTime(obj.getString("date")+"\n"+obj.getString("time"));
 
-                                            setRemainder();
-                                            arrayAdapter.notifyDataSetChanged();
-
-                                        }
-                                    });
-                                }
+                                arrayList.add(a);
+                                arrayAdapter.notifyDataSetChanged();
+                            }
 
 
 
                             Log.i("eeee",response.toString()+"aa");
-                        } catch (JSONException e) {
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
 
@@ -136,7 +154,7 @@ public class BookmarkActivity  extends AppCompatActivity  implements Connectivit
             @Override
             public void onErrorResponse(final VolleyError error) {
 
-                Toast.makeText(BookmarkActivity.this,"some error occured",Toast.LENGTH_LONG).show();
+                Toast.makeText(BookmarkActivity.this,"server error",Toast.LENGTH_LONG).show();
                 Log.i("eeee",error.toString());
             }
 
@@ -145,8 +163,8 @@ public class BookmarkActivity  extends AppCompatActivity  implements Connectivit
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params=new HashMap<String, String>();
-                params.put("uid","179");
-                Log.i("code",params.get("uid"));
+                params.put("query",q);
+                Log.i("codeb",params.get("uid")+"aa");
                 return params;
             }
         };
@@ -179,13 +197,7 @@ public class BookmarkActivity  extends AppCompatActivity  implements Connectivit
             ad.show();
         }
 
-       /* Snackbar snackbar = Snackbar
-                .make(findViewById(R.id.fab), message, Snackbar.LENGTH_LONG);
 
-        View sbView = snackbar.getView();
-        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(color);
-        snackbar.show();*/
     }
 
     @Override
@@ -238,35 +250,27 @@ public class BookmarkActivity  extends AppCompatActivity  implements Connectivit
         calendar.set(2016,10, Integer.parseInt(String.valueOf(edate.charAt(0))),hr, Integer.parseInt(min));
         long startTime = calendar.getTimeInMillis();
         startTime-=30*60*1000;
-        scheduleNotification(getNotification(title,"Starts In 30 mins",etime), startTime);
 
+        //scheduleNotification(getNotification(title,"Starts In 30 mins",etime), startTime);
+
+        setAlarm(Integer.parseInt(eid),title,"Starts at "+etime,startTime);
 
     }
 
-    private void scheduleNotification(Notification notification, long delay) {
 
-        notification.flags |= Notification.DEFAULT_SOUND;
-        notification.flags |= Notification.DEFAULT_LIGHTS;
-        notification.flags |= Notification.DEFAULT_VIBRATE;
+    public void setAlarm(int id,String title,String Text,long time){
+        Intent intent = new Intent(this, NotificationPublisher.class);
 
-        Intent notificationIntent = new Intent(this, NotificationPublisher.class);
-        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, 1);
-        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION, notification);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        long futureInMillis =  delay;
-        AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, futureInMillis, pendingIntent);
+        intent.putExtra("title",title);
+        intent.putExtra("text",Text);
+        intent.putExtra("id",String.valueOf(id));
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                this.getApplicationContext(), id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
+        Toast.makeText(this, "Alarm set in " + time + " seconds",
+                Toast.LENGTH_LONG).show();
     }
 
-    private Notification getNotification(String eventName, String date, String content) {
-        Notification.Builder builder = new Notification.Builder(this);
-        builder.setContentTitle(eventName);
-        builder.setContentText(date+"\n"+content);
-        builder.setSmallIcon(R.drawable.logo);
-
-
-
-        return builder.build();
-    }
 }
-

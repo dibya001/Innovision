@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,6 +30,8 @@ import com.android.volley.toolbox.StringRequest;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by surya on 19/10/16.
@@ -50,11 +53,14 @@ public class SignupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-        Toolbar tb = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(tb);
-        ImageView iv= (ImageView) findViewById(R.id.img);
-        iv.setTranslationY(-2000f);
-        iv.animate().translationYBy(2000f).setDuration(1000);
+        //Toolbar tb = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(tb);
+        //getSupportActionBar().setDisplayShowHomeEnabled(true);
+        //getSupportActionBar().setIcon(R.mipmap.ic_icon);
+
+        //ImageView iv= (ImageView) findViewById(R.id.img);
+  //      iv.setTranslationY(-2000f);
+//        iv.animate().translationYBy(2000f).setDuration(1000);*/
         sp = getSharedPreferences("demo_file", MODE_PRIVATE);
         edit = sp.edit();
         email= (EditText) findViewById(R.id.input_email);
@@ -95,26 +101,7 @@ public class SignupActivity extends AppCompatActivity {
         else
             gender="female";
 
-
-
-
-        if(name1.equals("")||email1.equals("")||univ1.equals("")||password1.equals("")||contact1.equals(""))
-        {
-            AlertDialog.Builder builder =new AlertDialog.Builder(SignupActivity.this);
-            builder.setTitle("signup failed");
-            builder.setMessage("please fill all the details");
-            builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-
-                }
-            });
-            AlertDialog al=builder.create();
-            al.show();
-
-        }
-        else
-        {
+        if(validate()){
             // Log.i("code","else");
             StringRequest stringRequest=new StringRequest(Request.Method.POST,regsiterurl,
                     new Response.Listener<String>() {
@@ -173,4 +160,44 @@ public class SignupActivity extends AppCompatActivity {
 
 
     }
+    public boolean validate() {
+        boolean valid = true;
+
+        name1=name.getText().toString();
+        email1=email.getText().toString();
+        password1=password.getText().toString();
+        univ1=univ.getText().toString();
+        contact1=contact.getText().toString();
+        //   Toast.makeText(LoginActivity.this,_email+_password,Toast.LENGTH_LONG).show();
+        Pattern pattern = Pattern.compile("[|#|%|&|*|(|)|'|\"|{|}|[|]|?]");
+        Matcher matchername = pattern.matcher(name1);
+        Matcher matcheremail = pattern.matcher(email1);
+        Matcher matcherpass= pattern.matcher(password1);
+        Matcher matcheruniv=pattern.matcher(univ1);
+        Matcher matchernu=pattern.matcher(contact1);
+        boolean bname = matchername.find();
+        boolean bemail=matcheremail.find();
+        boolean bpassword=matcherpass.find();
+        boolean buniv=matcheruniv.find();
+        boolean bnumber=matchernu.find();
+
+        Log.d("d",bname+"");
+        Log.d("d",""+bpassword);
+        Log.d("d",""+bemail);
+        Log.d("d",""+buniv);
+        Log.d("d",""+bnumber);
+
+        boolean bfinal=bname || bemail || buniv || bnumber||bpassword;
+        boolean bcheck=name1.isEmpty() || email1.isEmpty() || password1.isEmpty() || univ1.isEmpty() || contact1.isEmpty();
+
+        if ( bcheck==true || bfinal==true ) {
+            Toast.makeText(this, "Enter valid credentials", Toast.LENGTH_SHORT).show();
+            valid = false;
+        } else {
+            email.setError(null);
+        }
+
+        return valid;
+    }
+
 }

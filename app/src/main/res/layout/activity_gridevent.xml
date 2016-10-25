@@ -1,21 +1,28 @@
 <android.support.v4.widget.SwipeRefreshLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/swipe"
-    android:background="@drawable/background"
+
     xmlns:android="http://schemas.android.com/apk/res/android">
 
 <LinearLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#003311"
+    android:background="@drawable/backg"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/tb"
-        android:background="#45a"
+        android:background="@color/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:title="new page" />
+
+    <ProgressBar
+        android:id="@+id/gridprogress"
+        android:visibility="visible"
+        style="@style/Base.Widget.AppCompat.ProgressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/allEvents"

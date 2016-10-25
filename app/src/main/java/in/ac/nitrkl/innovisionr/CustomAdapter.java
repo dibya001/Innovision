@@ -1,8 +1,11 @@
 package in.ac.nitrkl.innovisionr;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +27,7 @@ import java.util.ArrayList;
  */
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder>{
     private static final String TAG = "CustomAdapter";
-    String textcat[]={"im","title","date","venue","time","descrption","rules","judging_criteria","coordinator"};
+    String textcat[]={"im","Title","Date","Venue","Time","Descrption","Rules","Judging Criteria","Coordinators"};
     Context ctx;
     ArrayList<String> arrayList;
     private int[] mDataSetTypes;
@@ -61,25 +64,25 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             final ImageViewHolder holder = (ImageViewHolder) viewHolder;
            // Log.i("image","http://innovision.nitrkl.ac.in/"+arrayList.get(position));
             Glide.with(ctx)
-                    .load(arrayList.get(position))
+                    .load("http://innovision.nitrkl.ac.in/android/images/"+arrayList.get(position))
                     .dontAnimate()
 
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .listener(new RequestListener<String, GlideDrawable>() {
-                        @Override
-                        public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                            holder.pb.setVisibility(View.VISIBLE);
-                            Log.i("glideimage","exception");
-                            return false;
-                        }
+                   .listener(new RequestListener<String, GlideDrawable>() {
+                       @Override
+                       public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                           holder.pb.setVisibility(View.GONE);
 
-                        @Override
-                        public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                            holder.pb.setVisibility(View.GONE);
-                            Log.i("glideimage","ready");
-                            return false;
-                        }
-                    })
+                           holder.img.setImageResource(R.mipmap.ic_launcher);
+                           return false;
+                       }
+
+                       @Override
+                       public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                           holder.pb.setVisibility(View.GONE);
+                           return false;
+                       }
+                   })
                     .into(holder.img);
 
 
@@ -90,9 +93,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             if(arrayList.get(position).length()<=2)
                 holder.score.setText("NA");
             else
-                holder.score.setText(arrayList.get(position));
+                holder.score.setText(Html.fromHtml(arrayList.get(position)));
             holder.heading.setText(textcat[position]);
-            holder.score.setTypeface(Typeface.createFromAsset(ctx.getAssets(),"kievit.ttf"));
+            //holder.score.setTypeface(Typeface.createFromAsset(ctx.getAssets(),"kievit.ttf"));
         }
 
     }

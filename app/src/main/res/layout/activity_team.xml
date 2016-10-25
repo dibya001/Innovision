@@ -1,7 +1,536 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="fill_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <android.support.v7.widget.Toolbar
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimary"
+    android:minHeight="?attr/actionBarSize"
+    android:id="@+id/tb"
+    />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:fillViewport="true"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="match_parent"
+            app:civ_border_color="#EEEEEE"
+
+            app:civ_border_width="4dp"
+            app:civ_shadow="true"
+            app:civ_shadow_radius="10"
+            android:src="@drawable/mohit"
+            app:civ_shadow_color="#8BC34A"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4"
+                android:textSize="18sp"
+                android:text="Mohit Gupta"
+                android:textColor="@color/colorAccent"
+                android:gravity="left"
+                android:layout_below="@+id/country_photo"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:textStyle="bold"/>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:text="+91-8596049882"
+                android:gravity="left"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="match_parent"
+            app:civ_border_color="#EEEEEE"
+
+            android:src="@drawable/sambit"
+            app:civ_border_width="4dp"
+            app:civ_shadow="true"
+            app:civ_shadow_radius="10"
+            app:civ_shadow_color="#8BC34A"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4"
+                android:textSize="18sp"
+                android:text="Sambit Suranjan"
+                android:textColor="@color/colorAccent"
+                android:gravity="left"
+                android:layout_below="@+id/country_photo"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:textStyle="bold"/>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:text="+91-9439036279"
+                android:gravity="left"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="match_parent"
+            app:civ_border_color="#EEEEEE"
+
+            android:src="@drawable/bhaskar"
+            app:civ_border_width="4dp"
+            app:civ_shadow="true"
+            app:civ_shadow_radius="10"
+            app:civ_shadow_color="#8BC34A"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4"
+                android:textSize="18sp"
+                android:text="Bhasker Sen"
+                android:textColor="@color/colorAccent"
+                android:gravity="left"
+                android:layout_below="@+id/country_photo"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:textStyle="bold"/>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:text="+91-7749805245"
+                android:gravity="left"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="match_parent"
+            app:civ_border_color="#EEEEEE"
+
+            android:src="@drawable/dibya"
+            app:civ_border_width="4dp"
+            app:civ_shadow="true"
+            app:civ_shadow_radius="10"
+            app:civ_shadow_color="#8BC34A"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4"
+                android:textSize="18sp"
+                android:text="Dibya Ranjan Mishra"
+                android:textColor="@color/colorAccent"
+                android:gravity="left"
+                android:layout_below="@+id/country_photo"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:textStyle="bold"/>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:text="dibyamishra016@gmail.com"
+                android:gravity="left"
+                />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="match_parent"
+            app:civ_border_color="#EEEEEE"
+
+            android:src="@drawable/kkg"
+            app:civ_border_width="4dp"
+            app:civ_shadow="true"
+            app:civ_shadow_radius="10"
+            app:civ_shadow_color="#8BC34A"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4"
+                android:textSize="18sp"
+                android:text="Koshal Kumar Garg"
+                android:textColor="@color/colorAccent"
+                android:gravity="left"
+                android:layout_below="@+id/country_photo"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:textStyle="bold"/>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:text="koshal.kkg1996@gmail.com"
+                android:gravity="left"
+                />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="match_parent"
+            app:civ_border_color="#EEEEEE"
+
+            android:src="@drawable/ehswar"
+            app:civ_border_width="4dp"
+            app:civ_shadow="true"
+            app:civ_shadow_radius="10"
+            app:civ_shadow_color="#8BC34A"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4"
+                android:textSize="18sp"
+                android:text="Eshwar Prithvi Jonnadula"
+                android:textColor="@color/colorAccent"
+                android:gravity="left"
+                android:layout_below="@+id/country_photo"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:textStyle="bold"/>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:text="eshwarprithvi9@gmail.com"
+                android:gravity="left"
+                />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="match_parent"
+            app:civ_border_color="#EEEEEE"
+
+            app:civ_border_width="4dp"
+            app:civ_shadow="true"
+            app:civ_shadow_radius="10"
+            android:src="@drawable/surya"
+            app:civ_shadow_color="#8BC34A"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4"
+                android:textSize="18sp"
+                android:text="Surya Prakash Sahu"
+                android:textColor="@color/colorAccent"
+                android:gravity="left"
+                android:layout_below="@+id/country_photo"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:textStyle="bold"/>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:text="suryaprakashsahuat1@gmail.com"
+                android:gravity="left"
+                />
+
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+
+                <com.mikhaellopez.circularimageview.CircularImageView
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="match_parent"
+                    app:civ_border_color="#EEEEEE"
+
+                    app:civ_border_width="4dp"
+                    app:civ_shadow="true"
+                    app:civ_shadow_radius="10"
+                    android:src="@drawable/aswin"
+                    app:civ_shadow_color="#8BC34A"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="4"
+                        android:textSize="18sp"
+                        android:text="Aswin Behera"
+                        android:textColor="@color/colorAccent"
+                        android:gravity="left"
+                        android:layout_below="@+id/country_photo"
+                        android:paddingBottom="8dp"
+                        android:paddingTop="8dp"
+                        android:textStyle="bold"/>
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="2"
+                        android:text="stormblade94@gmail.com"
+                        android:gravity="left"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+
+                <com.mikhaellopez.circularimageview.CircularImageView
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="match_parent"
+                    app:civ_border_color="#EEEEEE"
+
+                    app:civ_border_width="4dp"
+                    app:civ_shadow="true"
+                    app:civ_shadow_radius="10"
+                    android:src="@drawable/arnav"
+                    app:civ_shadow_color="#8BC34A"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="4"
+                        android:textSize="18sp"
+                        android:text="Arnav Kumar Tripathy "
+                        android:textColor="@color/colorAccent"
+                        android:gravity="left"
+                        android:layout_below="@+id/country_photo"
+                        android:paddingBottom="8dp"
+                        android:paddingTop="8dp"
+                        android:textStyle="bold"/>
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="2"
+                        android:text="arnavkumar.tripathy@gmail.com"
+                        android:gravity="left"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+
+                <com.mikhaellopez.circularimageview.CircularImageView
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="match_parent"
+                    app:civ_border_color="#EEEEEE"
+
+                    app:civ_border_width="4dp"
+                    app:civ_shadow="true"
+                    app:civ_shadow_radius="10"
+                    android:src="@drawable/abhay"
+                    app:civ_shadow_color="#8BC34A"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="4"
+                        android:textSize="18sp"
+                        android:text="Abhay Rahul"
+                        android:textColor="@color/colorAccent"
+                        android:gravity="left"
+                        android:layout_below="@+id/country_photo"
+                        android:paddingBottom="8dp"
+                        android:paddingTop="8dp"
+                        android:textStyle="bold"/>
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="2"
+                        android:text="carefreeaby@gmail.com"
+                        android:gravity="left"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

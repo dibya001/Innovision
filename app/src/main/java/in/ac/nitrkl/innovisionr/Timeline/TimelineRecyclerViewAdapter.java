@@ -1,6 +1,7 @@
 package in.ac.nitrkl.innovisionr.Timeline;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import in.ac.nitrkl.innovisionr.R;
+import in.ac.nitrkl.innovisionr.ShowEventActivity;
 
 /**
  * Created by pawan on 10/18/2016.
@@ -45,7 +47,10 @@ Context context;
        holder.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, allEvents.get(position).getEid()+"", Toast.LENGTH_SHORT).show();
+                Intent i=new Intent(context, ShowEventActivity.class);
+                i.putExtra("id",allEvents.get(position).getEid());
+                i.putExtra("category",allEvents.get(position).getEventType());
+                context.startActivity(i);
             }
         });
 
