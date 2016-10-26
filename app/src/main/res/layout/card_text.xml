@@ -6,8 +6,13 @@
 
     app:cardElevation="5dp"
     android:padding="10dp"
+<<<<<<< HEAD
     android:layout_marginTop="3dp"
 
+=======
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+>>>>>>> 17dc1fc2c2abfeb7eb7ac1e1fcb509f5e044ca45
     app:cardCornerRadius="2dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <LinearLayout
@@ -19,11 +24,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/textheading"
+<<<<<<< HEAD
         android:textSize="18sp"
         android:background="@color/colorPrimary"
         android:padding="5dp"
         android:textColor="#ffffff"
         android:textAllCaps="true"
+=======
+        android:textSize="22sp"
+>>>>>>> 17dc1fc2c2abfeb7eb7ac1e1fcb509f5e044ca45
         android:fontFamily="sans-serif"
         android:textStyle="bold"
         android:lineSpacingExtra="4dp"

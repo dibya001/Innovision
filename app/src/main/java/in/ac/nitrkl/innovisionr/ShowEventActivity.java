@@ -174,7 +174,11 @@ public class ShowEventActivity extends AppCompatActivity implements Connectivity
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);
 
+<<<<<<< HEAD
             sendIntent.putExtra(Intent.EXTRA_TEXT,"INNOVISION 2K16\nNIT Rourkela\n"+title+"\n\n"+ description + "\n" +"\nDate:"+date+"\nTime:"+time+"\nVenue:"+venue+ "\ninnovision.nitrkl.ac.in/details.php?EID=" + uid);
+=======
+            sendIntent.putExtra(Intent.EXTRA_TEXT,title+"\n\n"+ description + "\n" +"\nDate:"+date+"\nTime:"+time+"\nVenue:"+venue+ "\ninnovision.nitrkl.ac.in/details.php?EID=" + uid);
+>>>>>>> 17dc1fc2c2abfeb7eb7ac1e1fcb509f5e044ca45
             sendIntent.setType("text/plain");
             if(title!=null)
                 startActivity(Intent.createChooser(sendIntent, "Share Event"));
@@ -220,7 +224,11 @@ public class ShowEventActivity extends AppCompatActivity implements Connectivity
         long startTime = calendar.getTimeInMillis();
         startTime-=30*60*1000;
 
+<<<<<<< HEAD
         setAlarm(Integer.parseInt(eid),title,time,startTime);
+=======
+        setAlarm(Integer.parseInt(eid),title,"starts in 30 mins ",startTime);
+>>>>>>> 17dc1fc2c2abfeb7eb7ac1e1fcb509f5e044ca45
         //setAlarm(4545,title,"starts in 30 mins ",System.currentTimeMillis()+3000);
 
     }
@@ -406,7 +414,11 @@ public class ShowEventActivity extends AppCompatActivity implements Connectivity
 
                             mAdapter.notifyDataSetChanged();
 
+<<<<<<< HEAD
 
+=======
+                            if(category.equals("event"))
+>>>>>>> 17dc1fc2c2abfeb7eb7ac1e1fcb509f5e044ca45
                                 fab.setVisibility(View.VISIBLE);
                             eid=obj.getString("eid");
                             title=obj.getString("title");

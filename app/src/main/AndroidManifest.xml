@@ -15,8 +15,11 @@
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
+<<<<<<< HEAD
     <uses-permission android:name="android.permission.CALL_PHONE"/>
 
+=======
+>>>>>>> 17dc1fc2c2abfeb7eb7ac1e1fcb509f5e044ca45
     <application
         android:largeHeap="true"
         android:hardwareAccelerated="true"

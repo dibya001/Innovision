@@ -43,7 +43,11 @@
     android:layout_alignParentRight="true"
     android:src="@drawable/fab"
     android:id="@+id/fab"
+<<<<<<< HEAD
         android:visibility="invisible"
+=======
+        android:visibility="visible"
+>>>>>>> 17dc1fc2c2abfeb7eb7ac1e1fcb509f5e044ca45
     android:layout_marginBottom="16dp"
     android:layout_marginRight="16dp" />
 

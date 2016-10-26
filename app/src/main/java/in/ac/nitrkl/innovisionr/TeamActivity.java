@@ -1,6 +1,7 @@
 package in.ac.nitrkl.innovisionr;
 
 
+<<<<<<< HEAD
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -31,6 +32,25 @@ public class TeamActivity extends AppCompatActivity implements View.OnClickListe
 
     private static final int PERMISSION_REQUEST_CODE = 1;
 
+=======
+        import android.graphics.Color;
+        import android.os.Bundle;
+        import android.support.v7.app.AppCompatActivity;
+        import android.support.v7.widget.GridLayoutManager;
+        import android.support.v7.widget.LinearLayoutManager;
+        import android.support.v7.widget.RecyclerView;
+        import android.support.v7.widget.Toolbar;
+
+        import java.util.ArrayList;
+
+public class TeamActivity extends AppCompatActivity {
+
+    LinearLayoutManager lLayout;
+
+    RecyclerView allEvents;
+    ArrayList<Team> eventDetails;
+
+>>>>>>> 17dc1fc2c2abfeb7eb7ac1e1fcb509f5e044ca45
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +62,7 @@ public class TeamActivity extends AppCompatActivity implements View.OnClickListe
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.mipmap.ic_icon);
 
+<<<<<<< HEAD
 
         a=(LinearLayout)findViewById(R.id.mohit);
         b=(LinearLayout) findViewById(R.id.call2);
@@ -137,6 +158,8 @@ public class TeamActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
         }
+=======
+>>>>>>> 17dc1fc2c2abfeb7eb7ac1e1fcb509f5e044ca45
     }
 
 }

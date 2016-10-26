@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/InnovisionR-master.iml" filepath="$PROJECT_DIR$/InnovisionR-master.iml" />
+=======
+      <module fileurl="file://$PROJECT_DIR$/InnovisionR.iml" filepath="$PROJECT_DIR$/InnovisionR.iml" />
+>>>>>>> 17dc1fc2c2abfeb7eb7ac1e1fcb509f5e044ca45
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

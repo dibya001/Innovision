@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <bitmap xmlns:android="http://schemas.android.com/apk/res/android"
     android:src="@drawable/background"
+<<<<<<< HEAD
     android:alpha="0.2"/>
+=======
+    android:alpha="0.4"/>
+>>>>>>> 17dc1fc2c2abfeb7eb7ac1e1fcb509f5e044ca45

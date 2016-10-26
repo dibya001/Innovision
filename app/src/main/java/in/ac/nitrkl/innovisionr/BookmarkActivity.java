@@ -80,7 +80,10 @@ public class BookmarkActivity  extends AppCompatActivity  implements Connectivit
             tb.setTitleTextColor(Color.WHITE);
 
             Toast.makeText(BookmarkActivity.this,"You are not logged in",Toast.LENGTH_LONG).show();
+<<<<<<< HEAD
             finish();
+=======
+>>>>>>> 17dc1fc2c2abfeb7eb7ac1e1fcb509f5e044ca45
         }
         else
         {
@@ -254,7 +257,11 @@ public class BookmarkActivity  extends AppCompatActivity  implements Connectivit
 
         //scheduleNotification(getNotification(title,"Starts In 30 mins",etime), startTime);
 
+<<<<<<< HEAD
         setAlarm(Integer.parseInt(eid),title,etime,startTime);
+=======
+        setAlarm(Integer.parseInt(eid),title,"Starts at "+etime,startTime);
+>>>>>>> 17dc1fc2c2abfeb7eb7ac1e1fcb509f5e044ca45
 
     }
 

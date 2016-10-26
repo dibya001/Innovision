@@ -70,9 +70,14 @@ public class GridEventActivity extends AppCompatActivity implements Connectivity
                 @Override
                 public void onRefresh() {
 
+<<<<<<< HEAD
                     //makegrid();
                     fetch();
 
+=======
+                    fetch();
+                    makegrid();
+>>>>>>> 17dc1fc2c2abfeb7eb7ac1e1fcb509f5e044ca45
                     sp.setRefreshing(true);
 
                 }
@@ -175,10 +180,16 @@ public class GridEventActivity extends AppCompatActivity implements Connectivity
                                 a.setImage_path(path);
                                 a.setName(obj.getString("title"));
                                 eventDetails.add(a);
+<<<<<<< HEAD
 
 
                             }
                             rcAdapter.notifyDataSetChanged();
+=======
+                                rcAdapter.notifyDataSetChanged();
+
+                            }
+>>>>>>> 17dc1fc2c2abfeb7eb7ac1e1fcb509f5e044ca45
                             Log.i("eee",response);
                         } catch (JSONException e) {
                             e.printStackTrace();

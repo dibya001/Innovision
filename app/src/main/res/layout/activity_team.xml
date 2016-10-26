@@ -26,7 +26,10 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+<<<<<<< HEAD
         android:id="@+id/mohit"
+=======
+>>>>>>> 17dc1fc2c2abfeb7eb7ac1e1fcb509f5e044ca45
         android:orientation="horizontal">
 
 
@@ -77,7 +80,10 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+<<<<<<< HEAD
         android:id="@+id/call2"
+=======
+>>>>>>> 17dc1fc2c2abfeb7eb7ac1e1fcb509f5e044ca45
         android:orientation="horizontal">
 
 
@@ -127,7 +133,10 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+<<<<<<< HEAD
         android:id="@+id/call3"
+=======
+>>>>>>> 17dc1fc2c2abfeb7eb7ac1e1fcb509f5e044ca45
         android:orientation="horizontal">
 
 
@@ -531,6 +540,7 @@
 
             </LinearLayout>
 
+<<<<<<< HEAD
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -581,6 +591,8 @@
 
             </LinearLayout>
 
+=======
+>>>>>>> 17dc1fc2c2abfeb7eb7ac1e1fcb509f5e044ca45
 
 
 

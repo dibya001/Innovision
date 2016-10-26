@@ -5,7 +5,12 @@
     app:cardElevation="5dp"
     android:padding="10dp"
     app:cardCornerRadius="2dp"
+<<<<<<< HEAD
 
+=======
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+>>>>>>> 17dc1fc2c2abfeb7eb7ac1e1fcb509f5e044ca45
     xmlns:android="http://schemas.android.com/apk/res/android">
 <LinearLayout
     android:layout_width="match_parent"

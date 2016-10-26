@@ -121,8 +121,11 @@ public class TimelineTab1 extends android.support.v4.app.Fragment {
     }
 
     private void json(String response) throws JSONException {
+<<<<<<< HEAD
 
         list1.clear();
+=======
+>>>>>>> 17dc1fc2c2abfeb7eb7ac1e1fcb509f5e044ca45
         JSONArray jsonArray = new JSONArray(response);
         JSONObject obj = jsonArray.getJSONObject(0);
 
