@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="in.ac.nitrkl.innovisionr.HomeActivity">
+    <item
+        android:id="@+id/action_register"
+        android:orderInCategory="100"
+        android:title="register"
+        app:showAsAction="always"
+        android:icon="@drawable/profile"/>
+
+    <item
+        android:id="@+id/map"
+        android:icon="@drawable/location"
+        app:showAsAction="always"
+        android:title="map"/>
+</menu>
